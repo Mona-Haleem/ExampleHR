@@ -197,6 +197,10 @@ app.post('/reset', (req: Request, res: Response) => {
     res.status(200).json({ message: "Database and counters reset to initial state." });
 });
 
-app.listen(3001, () => {
-    console.log('Mock HCM Server running on port 3001');
-});
+export { app };
+
+if (require.main === module) {
+    app.listen(3001, () => {
+        console.log('Mock HCM Server running on port 3001');
+    });
+}
