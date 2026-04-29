@@ -125,7 +125,7 @@ export class TimeOffService {
       return {
         request_id: requestId,
         status: RequestStatus.PENDING,
-        remainingBalance: newBalanceInfo.availableBalance,
+        availableBalance: newBalanceInfo.availableBalance,
         reservedBalance: newBalanceInfo.reservedBalance,
       };
     } catch (error) {
