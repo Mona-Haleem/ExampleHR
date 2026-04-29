@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
-import Database from 'better-sqlite3';
 import cors from 'cors';
+import Database from 'better-sqlite3';
 import CounterService from './services/counterService';
 import SeedService from './services/seedService';
 
@@ -10,7 +10,6 @@ app.use(cors());
 
 // Initialize DB
 let db = new Database(':memory:');
-
 
 const counterService = new CounterService();
 
@@ -195,6 +194,15 @@ app.post('/reset', (req: Request, res: Response) => {
     SeedService.seed(db);
     counterService.reset();
     res.status(200).json({ message: "Database and counters reset to initial state." });
+});
+
+// Error handling middleware
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error(`[ERROR] ${err.message}`);
+    res.status(500).json({
+        message: "Internal server error",
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
 });
 
 export { app };
